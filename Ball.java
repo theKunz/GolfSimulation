@@ -4,7 +4,7 @@
  * @version 2013.04.07
  *
 */
-public class Model
+public class Ball
 {
     private double accel;
     private double p;
@@ -58,14 +58,11 @@ public class Model
      * Given a force and the mass, find the initial velocity
      * of the putt
      */
-    public double getVeloInit(float force, float mass)
+    public double getVeloInit(float clubSpeed, float massBall, 
+		float massClub, float coeffOfRestit)
     {
-        // find the acceleration of the force
-        double a = force / mass;
-        // integrate to find the velocity
-        // This assumes the force acts over one second
-        // We could make it more realistic later
-        double veloInit = a;
+        double veloInit = (clubSpeed * coeffOfRestit) / 
+			(1.0 + (massBall / massClub))
         return veloInit;
     }
 
