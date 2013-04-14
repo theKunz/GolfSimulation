@@ -6,27 +6,32 @@
 */
 public class Ball
 {
+	private int moveCounter;
+	private double massBall;
+	private double initialVelocity;
+	private double currentVelocity;
+	private double currentVelocityX;
+	private double currentVelocityY;
+	private double angle;
+	private double initialX;
+	private double initialY;
+	private double currentX;
+	private double currentY;
     private double accel;
     private double p;
-    private double g;
-    private double xPosition = 0;
-    private double yPosition = 0;
+    private final double GRAVITY_ACCEL;
+	private Course course;
+	private int radius;
+	
 
-    /**
-     * Main
-     *
-     */
-   // public void main( )
-   // {
-   //     this.getDistance(7, 30);
-   // }
+
     /**
      * constructor
      */
-    public Model()
+    public Ball()
     {
         double p = 0.131;
-        double g = 9.81;
+        GRAVITY_ACCEL = 9.81;
         accel = - (5 / 7) * p * g;
     }
     /**
@@ -35,10 +40,10 @@ public class Ball
      * is the radius of the ball.
      * @param p the coefficient of friction.
      */
-    public Model(float p)
+    public Ball(float p)
     {
-        double g = 9.81;
-        accel = - (5 / 7) * p * g;
+        GRAVITY_ACCEL = 9.81;
+        accel = - (5 / 7) * p * GRAVITY_ACCEL;
     }
 
     /**
@@ -54,16 +59,43 @@ public class Ball
         d = veloInit * time + (1 / 2) * accel * time * time;
         return d;
     }
+	
+	/**
+	* Get the current velocity given a time value.
+	*/
+	public double getCurrentVelocity(float time)
+	{
+		currentVelocity = intialVelocity + accel * time;
+		return time;
+	}
+	/**
+	* Get the velocity in the X direction.
+	*/
+	public double getVelocityX(float time, float angle)
+	{	
+		currentVelocityX = getCurrentVelocity(time) * Math.cos(angle);
+		return currentVelocityX;
+	}
+	
+	/**
+	* Get the velocity in the Y direction.
+	*/
+	public double getVelocityY(float time, float angle)
+	{	
+		currentVelocityY = getCurrentVelocity(time) * Math.sin(angle);
+		return currentVelocityY
+	}
+	
     /**
      * Given a force and the mass, find the initial velocity
      * of the putt
      */
-    public double getVeloInit(float clubSpeed, float massBall, 
+    public double getInitalVelocity(float clubSpeed, float massBall, 
 		float massClub, float coeffOfRestit)
     {
-        double veloInit = (clubSpeed * coeffOfRestit) / 
+        IntialVelocity = (clubSpeed * coeffOfRestit) / 
 			(1.0 + (massBall / massClub))
-        return veloInit;
+        return InitialVelocity;
     }
 
     /**
