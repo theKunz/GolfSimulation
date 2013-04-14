@@ -1,5 +1,4 @@
 
-
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -19,6 +18,11 @@ public class Course extends Canvas{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,600);
         frame.setResizable(false);
+        
+        Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+        f.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
+        600);
+        
         setVisible(true);
     }
     
@@ -38,9 +42,9 @@ public class Course extends Canvas{
         return this.friction;
     }
     
-    public void setFriction(double friction)
+    public void setFriction(double frictiony)
     {
-        this.friction = friction;
+        this.friction = frictiony;
     }
     
     public double getTime()
@@ -48,9 +52,9 @@ public class Course extends Canvas{
         return this.time;
     }
     
-    public void setTime(double time)
+    public void setTime(double timey)
     {
-        this.time = time;
+        this.time = timey;
     }
     
     
