@@ -31,6 +31,7 @@ public class MainGolf
     JPanel menu;
     JPanel view;
     
+    
     public MainGolf()
     {
         
@@ -147,5 +148,13 @@ public class MainGolf
              
              
          }
+         
+         /**
+          * This method will take 
+          */
+          public void actionPerformed(ActionEvent e) {
+              String command = e.getActionCommand();
+              
+          }
     
 }
