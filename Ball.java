@@ -12,7 +12,6 @@ public class Ball
     private double currentVelocity;
     private double currentVelocityX;
     private double currentVelocityY;
-    private double angle;
     private double initialX;
     private double initialY;
     private double currentX;
