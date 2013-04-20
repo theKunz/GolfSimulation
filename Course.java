@@ -1,3 +1,4 @@
+
 package course;
 import java.awt.*;
 import java.awt.Color;
@@ -9,12 +10,15 @@ import javax.swing.JFrame;
  */
 public class Course extends Canvas
 {
-
+    private double friction;
+    private Ball ball;
+    private double time;
 
     
     public Course()
     {
         this.setBounds(30, 340, 740, 200);
+        ball = new Ball();
     }
     /**
      * This paints the field, including the hole, onto the canvas
@@ -38,6 +42,45 @@ public class Course extends Canvas
         
     
     }
+    /*
+     * sets the friction constant for the course
+     * @param fric 
+     */
+    public void setFriction(double fric)
+    {
+        friction = fric;
+    }
+    /**
+     * returns the friction constant of the course
+     * @return friction
+     */
+    public double getFriction()
+    {
+        return friction;
+    }
+    /**
+     * returns the instance of Ball for this game
+     * @return ball
+     */
+    public Ball getBall()
+    {
+        return ball;
+    }
+    /**
+     * returns the time elapsed
+     */
+    public double getTime()
+    {
+        return time;
+    }
+    /**
+     * sets the time elapsed
+     */
+    public void setTime(double t)
+    {
+        time = t;
+    }
+    
     
     /*
         public void paint(Graphics g) {
