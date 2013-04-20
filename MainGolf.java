@@ -39,6 +39,16 @@ public class MainGolf
     
     public static void main(String[] args) 
     {
+        
+        MainGolf golfSimulation = new MainGolf();
+        golfSimulation.initialize();
+        
+        
+ 
+        
+    }
+    
+    public void initialize() {
         Course c = new Course();
         c.setBounds(30, 340, 740, 200);
         
@@ -74,7 +84,6 @@ public class MainGolf
         f.add(c);
         f.setVisible(true);
         f.setResizable(false);
-        
     }
     
 }
