@@ -90,7 +90,7 @@ public class Ball
     * Get the velocity in the X direction.
     * @return the x velocity
     */
-    public void getVelocityX()
+    public double getVelocityX()
     {   
         return currentVelocityX; 
     }
