@@ -1,4 +1,3 @@
-
 package course;
 import java.awt.*;
 import java.awt.Color;
@@ -39,6 +38,9 @@ public class Course extends Canvas
         putt.fillRect(50, 360, 680, 160); //grass
         putt.setColor(Color.BLACK);
         putt.fillOval(650, 425, 25, 25); // hole
+        
+        putt.setColor(Color.WHITE);
+        putt.fillOval(ball.getCurrentX(), ball.getCurrentY(), 25, 25); // ball
         
     
     }
