@@ -19,6 +19,7 @@ public class Ball
     private double currentY;
     private double accel;
     private double p;
+    private double angle;
     private final double GRAVITY_ACCEL;
     private Course course;
     private int radius; 
@@ -52,7 +53,7 @@ public class Ball
      * @param veloInit the initial velocity
      * @return the distance it went
      */
-    public double getDistance(float time, float veloInit)
+    public double getDistance(double time, double veloInit)
     {
         double d = 0;
         d = veloInit * time + (1 / 2) * accel * time * time;
@@ -81,7 +82,7 @@ public class Ball
     * Calculate the velocity in the X direction.
     * @param angle the angle at which it was hit with the horizontal
     */
-    public void calcVelocityX(float angle)
+    public void calcVelocityX(float ang)
     {   
         currentVelocityX = currentVelocity * Math.cos(angle);
     }
@@ -99,7 +100,7 @@ public class Ball
     * Calculate the velocity in the Y direction.
     * @param angle the angle at which it was hit with the horizontal
     */
-    public void calcVelocityY(float angle)
+    public void calcVelocityY(float ang)
     {   
         currentVelocityY = currentVelocity * Math.sin(angle);
     }
@@ -152,12 +153,24 @@ public class Ball
      * @param distance how far the ball is from
      * it's original position
      * @param angle the at which the ball was hit
-     * @return the x position
      */
-    public double getX(double distance, double angle)
+    public void calcX(double distance)
     {
-        double x = distance * Math.cos(angle);
-        return x;
+        currentX = distance * Math.cos(angle);
+    }
+    
+    /**
+     * Get the current x position
+     */
+     
+    public double getCurrentX()
+    {
+        return currentX;
+    }
+    
+    public double getCurrentY()
+    {
+        return currentY;
     }
     
     /**
@@ -165,22 +178,26 @@ public class Ball
      * @param distance how far the ball is from
      * it's original position
      * @param angle the at which the ball was hit
-     * @return the y position
      */
-    public double getY(double distance, double angle)
+    public void calcY(double distance)
     {
-        double y = distance * Math.sin(angle);
-        return y;
+        currentY = distance * Math.sin(angle);
+    }
+    
+    public void move (double time)
+    {
+        calcX(getDistance(time, initialVelocity));
+        calcY(getDistance(time, initialVelocity));
+        System.out.println( getCurrentX());
+        System.out.println( getCurrentY());
     }
 
     /*
      public void move (double time) {
     
-        Lane tempLane = getLane();
         
         double x = 0;
         double y = 0;
-        //if CurrentX < getOilPercent()
         
         if (time == 0.0) {
         
@@ -230,22 +247,7 @@ public class Ball
             System.out.println("linear velocity changed from " + getVelocity() + " to " + newLinearVelocity);
             setVelocity(newLinearVelocity);
             
-            // angular velocity decreases due to friction 
-            if (getAngularVelocity() != 0) {
-                double newAngularVelocity = getAngularVelocity() - (lane.getFriction() * GRAVITY_ACCELERATION * time);
-                if (getAngularVelocity() < 0) {
-                    newAngularVelocity = getAngularVelocity() + (lane.getFriction() * GRAVITY_ACCELERATION * time);
-                    if (newAngularVelocity > 0) {
-                        newAngularVelocity = 0;  // stopped spinning
-                    }
-                } else {
-                    if (newAngularVelocity < 0) {
-                        newAngularVelocity = 0;
-                    }
-                }
-                System.out.println("angular changed from " + getAngularVelocity() + " to " + newAngularVelocity);
-                setAngularVelocity(newAngularVelocity);
-            }
+            
             System.out.println("");
         }
         
@@ -256,15 +258,7 @@ public class Ball
         
         
         System.out.println(getName() + " (" + getCurrentX() + ", " + getCurrentY() + ") ----> (" + x + ", " + y + ")");
-        
-        if (y < AlleyConversion.getGutterWidth()){
-            y =  AlleyConversion.getGutterWidth() / 2;
-            setAngle(0);
-        }
-        if (y > AlleyConversion.getLaneLength() - AlleyConversion.getGutterWidth()){
-            y = AlleyConversion.getLaneLength()- (AlleyConversion.getGutterWidth() / 2);
-            setAngle(0);
-        }
+    
         
         setCurrentLocation (x, y); 
         
