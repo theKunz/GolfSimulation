@@ -23,13 +23,20 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class MainGolf
+public class MainGolf implements ActionListener, ChangeListener 
 {
     JSlider friction;
     JSlider startPos;
+    JSlider velocity;
     JSlider mass;
     JPanel menu;
     JPanel view;
+    //The start Button
+    JButton sbutton;
+    //The reset Button
+    JButton rbutton;
+    //The pause button
+    JButton pbutton;
     
     
     public MainGolf()
@@ -53,22 +60,20 @@ public class MainGolf
         c.setBounds(30, 340, 740, 200);
         
         
-        JFrame f = new JFrame();
-        f.setTitle("Minigolf Simulation");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame = new JFrame();
+        frame.setTitle("Minigolf Simulation");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
-        f.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
+        frame.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
         600);
         
-
+        //Potentially organize it with more JPanels
         menu = new JPanel();
         view = new JPanel();
-        
-        startPos.setOrientation(SwingConstants.VERTICAL);
-        startPos.setMaximum(160 - width.getValue());
-        startPos.setMinimum(0 + width.getValue());
-        
+
+        makeSliders();
+        menu.add(velocity);
         menu.add(startPos);
         menu.add(friction);
         menu.add(mass);
@@ -76,10 +81,43 @@ public class MainGolf
         //view.add(c);
         
         //f.add(view, BorderLayout.SOUTH);
-        f.add(menu);
-        f.add(c);
-        f.setVisible(true);
-        f.setResizable(false);
+        frame.add(menu);
+        frame.add(c);
+        frame.setVisible(true);
+        frame.setResizable(false);
+        
+        //Setting up the buttons for the JFrame 
+        sbutton = new JButton("Start");
+        sbutton.setActionCommand("Start");
+        sbutton.setVisible(true);
+        
+        rbutton = new JButton("Reset");
+        rbutton.setActionCommand("Reset");
+        rbutton.setVisible(true);
+        
+        pbutton = new JButton("Pause");
+        pbutton = new JButton("Pause");
+        pbutton.setVisible(true);
+        
+        //Uses the frame size to set the size of the button
+        Dimension buttonSize = new Dimension ((center.x - 800 / 2)) / 3, 99);
+        
+        sbutton.setPreferredSize(buttonSize);
+        sbutton.setMinimumSize(buttonSize);
+        sbutton.setMaximumSize(buttonSize);
+        sbutton.addActionListener(this);
+        
+        pbutton.setPreferredSize(buttonSize);
+        pbutton.setMinimumSize(buttonSize);
+        pbutton.setMaximumSize(buttonSize);
+        pbutton.addActionListener(this);
+
+        rbutton.setPreferredSize(buttonSize);
+        rbutton.setMinimumSize(buttonSize);
+        rbutton.setMaximumSize(buttonSize);
+        rbutton.addActionListener(this);
+        
+
     }
     
     /**
@@ -98,6 +136,10 @@ public class MainGolf
          final int MIN_MASS = 20;
          final int INIT_MASS = 30;
          
+         final int MAX_VEL = 50;
+         final int MIN_VEL = 20;
+         final int INIT_VEL = 30;
+         
          Dimension sliderDimension = new Dimension (300, 70);
 
          
@@ -107,6 +149,7 @@ public class MainGolf
          mass = createSlider(MIN_MASS, MAX_MASS, INIT_MASS, sliderDimension, MIN_MASS + " mass",
                             MAX_MASS + " mass", "Mass of the ball");                  
          mass.setVisible(true);
+         velcity = createSlider(MIN_VEL, MAX_VEL, INIT_VEL, sliderDimension, "", "", "Velocity of the ball");
          
          //Since we want the starting position slider to be verticle we are not able to use the "createSlider" method
          startPos = new JSlider(JSlider.VERTICAL, MIN_POSIT, MAX_POSIT, INIT_POSIT);
