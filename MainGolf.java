@@ -1,12 +1,14 @@
+package course;
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 /**
- *
- * @author Andrew Koh
- */
+*
+* @author Andrew Koh
+* @author Aaron Kunzer
+*/
 
 import javax.swing.JFrame;
 import java.awt.Canvas;
@@ -17,29 +19,61 @@ import java.awt.Container;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 
-public class MainGolf {
+public class MainGolf
+{
+    static JSlider friction;
+    static JSlider startPos;
+    static JSlider mass;
+    static JSlider width;
+    static JPanel menu;
+    static JPanel view;
     
-    public static void main(String args[])
+    public MainGolf()
     {
-        JFrame frame = new JFrame();
-        frame.setSize(900, 600);
-        frame.setAlwaysOnTop(true);
-        frame.setLayout(new BorderLayout());
-        JPanel menu = new JPanel();
-        JPanel screen = new JPanel();
         
-        Container myContainer = new Container();
+    }
+    
+    public static void main(String[] args) 
+    {
+        Course c = new Course();
+        c.setBounds(30, 340, 740, 200);
         
-        menu.setBackground(Color.blue);
-        menu.setPreferredSize(new Dimension(900, 150));
         
-        screen.setBackground(Color.green);
-        screen.setPreferredSize(new Dimension(900, 450));
-        frame.add(menu, BorderLayout.NORTH);
-        frame.add(screen, BorderLayout.SOUTH);
-        frame.setVisible(true);
+        JFrame f = new JFrame();
+        f.setTitle("Minigolf Simulation");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+        f.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
+        600);
+        
+        friction = new JSlider();
+        startPos = new JSlider();
+        mass = new JSlider();
+        width = new JSlider();
+        menu = new JPanel();
+        view = new JPanel();
+        
+        startPos.setOrientation(SwingConstants.VERTICAL);
+        startPos.setMaximum(160 - width.getValue());
+        startPos.setMinimum(0 + width.getValue());
+        
+        menu.add(startPos);
+        menu.add(friction);
+        menu.add(mass);
+        menu.add(width);
+        
+        //view.add(c);
+        
+        //f.add(view, BorderLayout.SOUTH);
+        f.add(menu);
+        f.add(c);
+        f.setVisible(true);
+        f.setResizable(false);
         
     }
     
