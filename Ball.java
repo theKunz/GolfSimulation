@@ -191,6 +191,15 @@ public class Ball
         System.out.println( getCurrentY());
     }
 
+    public void setMass(double m)
+    {
+        massBall = m;
+    }
+    
+    public double getMass()
+    {
+        return massBall;
+    }
     /*
      public void move (double time) {
     
