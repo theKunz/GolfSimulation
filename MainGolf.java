@@ -25,12 +25,11 @@ import java.awt.*;
 
 public class MainGolf
 {
-    static JSlider friction;
-    static JSlider startPos;
-    static JSlider mass;
-    static JSlider width;
-    static JPanel menu;
-    static JPanel view;
+    JSlider friction;
+    JSlider startPos;
+    JSlider mass;
+    JPanel menu;
+    JPanel view;
     
     public MainGolf()
     {
@@ -61,10 +60,7 @@ public class MainGolf
         f.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
         600);
         
-        friction = new JSlider();
-        startPos = new JSlider();
-        mass = new JSlider();
-        width = new JSlider();
+
         menu = new JPanel();
         view = new JPanel();
         
@@ -75,7 +71,6 @@ public class MainGolf
         menu.add(startPos);
         menu.add(friction);
         menu.add(mass);
-        menu.add(width);
         
         //view.add(c);
         
@@ -85,5 +80,72 @@ public class MainGolf
         f.setVisible(true);
         f.setResizable(false);
     }
+    
+    /**
+     * Makes the sliders for the frame 
+     */
+     public void makeSliders() {
+         final int MAX_FRIC = 50;
+         final int MIN_FRIC = 20;
+         final int INIT_FRIX = 30;
+         
+         final int MAX_POSIT = 50;
+         final int MIN_POSIT = 20;
+         final int INIT_POSIT = 30;
+         
+         final int MAX_MASS = 50;
+         final int MIN_MASS = 20;
+         final int INIT_MASS = 30;
+         
+         Dimension sliderDimension = new Dimension (300, 70);
+
+         
+         friction = createSlider(MIN_FRIC, MAX_FRIC, INIT_FRIC, sliderDimension, "low friction", 
+                            "high friction", "Friction of the course");
+         friction.setVisible(true);
+         mass = createSlider(MIN_MASS, MAX_MASS, INIT_MASS, sliderDimension, MIN_MASS + " mass",
+                            MAX_MASS + " mass", "Mass of the ball");                  
+         mass.setVisible(true);
+         
+         //Since we want 
+         startPos = new JSlider(JSlider.VERTICAL, MIN_POSIT, MAX_POSIT, INIT_POSIT);
+         startPos.setPreferredSize(sliderDimension);
+         startPos.setMaximumSize(sliderDimension);
+         startPos.setMinimumSize(sliderDimension);
+         startPos = createSlider(MIN_POS, MAX_POS, INIT_POS, sliderD);   
+         Hashtable temp = new Hashtable();
+             temp.put ( new Integer (init), new JLabel (initi));
+             temp.put ( new Integer (min), new JLabel (mini));
+             temp.put ( new Integer (max), new JLabel (maxi)); 
+         temporarySlider.setLabelTable(temp);
+         temporarySlider.setPaintLabels(true);
+         
+         temporarySlider.addChangeListener(this);
+         
+     }
+     
+     /**
+      * This method will create a new JSlider 
+      */
+      public JSlider createSlider (int min, int max, int init, Dimension y, String mini, String maxi, String initi){
+             JSlider temporarySlider = new JSlider(JSlider.HORIZONTAL, min, max, init);
+             temporarySlider.setPreferredSize(y);
+             temporarySlider.setMaximumSize(y);
+             temporarySlider.setMinimumSize(y);
+             
+             Hashtable temp = new Hashtable();
+             temp.put ( new Integer (init), new JLabel (initi));
+             temp.put ( new Integer (min), new JLabel (mini));
+             temp.put ( new Integer (max), new JLabel (maxi)); 
+             temporarySlider.setLabelTable(temp);
+             temporarySlider.setPaintLabels(true);
+             
+             temporarySlider.addChangeListener(this);
+         
+             return temporarySlider;
+             
+             
+             
+         }
     
 }
