@@ -40,7 +40,10 @@ public class Course extends Canvas
         putt.fillOval(650, 425, 25, 25); // hole
         
         putt.setColor(Color.WHITE);
-        putt.fillOval(ball.getCurrentX(), ball.getCurrentY(), 25, 25); // ball
+        
+        ball.move(time);
+        
+        putt.fillOval((int)ball.getCurrentX(), (int)ball.getCurrentY(), 25, 25); // ball
         
     
     }
