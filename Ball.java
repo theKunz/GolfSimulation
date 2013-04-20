@@ -173,4 +173,104 @@ public class Ball
         return y;
     }
 
+    /*
+     public void move (double time) {
+    
+        Lane tempLane = getLane();
+        
+        double x = 0;
+        double y = 0;
+        //if CurrentX < getOilPercent()
+        
+        if (time == 0.0) {
+        
+            System.out.println("matched time=0");
+            x = getCurrentX();
+            y = getCurrentY();
+        } else if ((getCurrentX() < lane.getOilPercentage()) || (getIsPin()) || (time < 0)) {
+        
+            // no friction, linear velocity only
+            
+            System.out.println("angle=" + getAngle() + " radians=" + getAngleRadians());
+            System.out.println("velocity=" + getVelocity());
+            x = getCurrentX()+ (Math.cos(getAngleRadians()) * getVelocity() * time);
+            y = getCurrentY()+ (Math.sin(getAngleRadians())* getVelocity() * time); 
+        } else {
+            // friction part of the alley, accounts for linear and angular velocity with angle changes.
+            
+            double angularVelocityAngle = 0;            
+   
+                angularVelocityAngle = getAngleRadians() + (Math.PI / 4.0);
+         
+            double deltaX = (Math.cos(getAngleRadians()) * getVelocity() * time) +  
+                (Math.cos(angularVelocityAngle) * getAngularVelocity() * time); 
+            double deltaY = (Math.sin(getAngleRadians()) * getVelocity() * time) +  
+                (Math.sin(angularVelocityAngle) * getAngularVelocity() * time); 
+            
+         
+            double newAngle = Math.atan(deltaY / deltaX);
+            if (deltaX < 0.0){
+                newAngle += 180.0;
+            }
+            setAngle(Math.toDegrees(newAngle));
+            
+            System.out.println("New original linear angle=" + getAngleRadians() + " degrees=" + Math.toDegrees(getAngleRadians()));
+            
+            
+            
+            x = deltaX + getCurrentX();
+            y = deltaY + getCurrentY(); 
+            
+            System.out.println("");
+            // linear velocity decreases due to friction
+            double newLinearVelocity = getVelocity() - (lane.getFriction() * GRAVITY_ACCELERATION * time);
+            if (newLinearVelocity < 0) {
+                newLinearVelocity = 0;
+            }
+            System.out.println("linear velocity changed from " + getVelocity() + " to " + newLinearVelocity);
+            setVelocity(newLinearVelocity);
+            
+            // angular velocity decreases due to friction 
+            if (getAngularVelocity() != 0) {
+                double newAngularVelocity = getAngularVelocity() - (lane.getFriction() * GRAVITY_ACCELERATION * time);
+                if (getAngularVelocity() < 0) {
+                    newAngularVelocity = getAngularVelocity() + (lane.getFriction() * GRAVITY_ACCELERATION * time);
+                    if (newAngularVelocity > 0) {
+                        newAngularVelocity = 0;  // stopped spinning
+                    }
+                } else {
+                    if (newAngularVelocity < 0) {
+                        newAngularVelocity = 0;
+                    }
+                }
+                System.out.println("angular changed from " + getAngularVelocity() + " to " + newAngularVelocity);
+                setAngularVelocity(newAngularVelocity);
+            }
+            System.out.println("");
+        }
+        
+
+        
+        Point startPoint = getCurrentLocation(); 
+        
+        
+        
+        System.out.println(getName() + " (" + getCurrentX() + ", " + getCurrentY() + ") ----> (" + x + ", " + y + ")");
+        
+        if (y < AlleyConversion.getGutterWidth()){
+            y =  AlleyConversion.getGutterWidth() / 2;
+            setAngle(0);
+        }
+        if (y > AlleyConversion.getLaneLength() - AlleyConversion.getGutterWidth()){
+            y = AlleyConversion.getLaneLength()- (AlleyConversion.getGutterWidth() / 2);
+            setAngle(0);
+        }
+        
+        setCurrentLocation (x, y); 
+        
+        
+        
+    }
+    */
+
 }
