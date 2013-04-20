@@ -85,9 +85,9 @@ public class MainGolf
      * Makes the sliders for the frame 
      */
      public void makeSliders() {
-         final int MAX_FRIC = 50;
-         final int MIN_FRIC = 20;
-         final int INIT_FRIX = 30;
+         final int MAX_FRIC = 0.6;
+         final int MIN_FRIC = 0.35;
+         final int INIT_FRIC = 0.4;
          
          final int MAX_POSIT = 50;
          final int MIN_POSIT = 20;
@@ -100,27 +100,27 @@ public class MainGolf
          Dimension sliderDimension = new Dimension (300, 70);
 
          
-         friction = createSlider(MIN_FRIC, MAX_FRIC, INIT_FRIC, sliderDimension, "low friction", 
-                            "high friction", "Friction of the course");
+         friction = createSlider(MIN_FRIC, MAX_FRIC, INIT_FRIC, sliderDimension, "Grass", 
+                            "Dry sand", "Friction of wet sand");
          friction.setVisible(true);
          mass = createSlider(MIN_MASS, MAX_MASS, INIT_MASS, sliderDimension, MIN_MASS + " mass",
                             MAX_MASS + " mass", "Mass of the ball");                  
          mass.setVisible(true);
          
-         //Since we want 
+         //Since we want the starting position slider to be verticle we are not able to use the "createSlider" method
          startPos = new JSlider(JSlider.VERTICAL, MIN_POSIT, MAX_POSIT, INIT_POSIT);
          startPos.setPreferredSize(sliderDimension);
          startPos.setMaximumSize(sliderDimension);
          startPos.setMinimumSize(sliderDimension);
          startPos = createSlider(MIN_POS, MAX_POS, INIT_POS, sliderD);   
          Hashtable temp = new Hashtable();
-             temp.put ( new Integer (init), new JLabel (initi));
-             temp.put ( new Integer (min), new JLabel (mini));
-             temp.put ( new Integer (max), new JLabel (maxi)); 
-         temporarySlider.setLabelTable(temp);
-         temporarySlider.setPaintLabels(true);
-         
-         temporarySlider.addChangeListener(this);
+             temp.put ( new Integer (INIT_POSIT), new JLabel ("Position"));
+             temp.put ( new Integer (MIN_POSIT), new JLabel (""));
+             temp.put ( new Integer (MAX_POSIT), new JLabel ("")); 
+         startPos.setLabelTable(temp);
+         startPos.setPaintLabels(true);
+         startPos.addChangeListener(this);
+         startPos.setVisible(true);
          
      }
      
