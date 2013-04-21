@@ -92,40 +92,12 @@ public class Course extends Canvas
         
         super.paint(g);
         System.out.println("paint me");
-        
-        //Draw Oil
-        g.setColor(Color.BLUE);
-                    g.fillRect(0, 0, (int)getOilPercentage(), (int)AlleyConversion.getLaneLength());
-        
-        //Draw Gutter
-        g.setColor(Color.GRAY);
-        g.fillRect(0, 0,(int) AlleyConversion.getLaneWidth(), (int) AlleyConversion.getGutterWidth());
-        g.fillRect(0, (int)AlleyConversion.getLaneLength() - (int)AlleyConversion.getGutterWidth(),
-                (int) AlleyConversion.getLaneWidth(), (int) AlleyConversion.getGutterWidth());
-        
-        
-        
+                             
         for (int i = 0; i < ballPins.size(); i++){
             MovingObjects vari = (MovingObjects) ballPins.get(i);
             
             if (vari.getVelocity() != 0){
-                vari.move(getTime());
-    
-                    
-                 for (int j = i + 1;  j < ballPins.size(); j++){
-                     MovingObjects varj = (MovingObjects) ballPins.get(j);
-                     if (AlleyConversion.isHit(vari.getCurrentLocation(), vari.getRadius(), 
-                             varj.getCurrentLocation(), varj.getRadius())){
-                                    
-                            System.out.println("It hit --------------> r1,r2=" + vari.getRadius() + ", " + varj.getRadius());
-                            varj.printCurrentLocation();
-                            vari.printCurrentLocation();
-                            varj.setColor(Color.RED);
-                            AlleyConversion.collision(vari, varj);
-                         
-                        }            
-                         
-                         
+                vari.move(getTime());                        
                          
                          
                  }
