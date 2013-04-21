@@ -195,6 +195,17 @@ public class MainGolf implements ActionListener, ChangeListener
          }
          
          /**
+          * This method will gather the data from the sliders and assign them to the simulation
+          */ 
+          public void resestSettings(){
+              Ball ball = course.getBall(); 
+              ball.setMass(mass.getValue());
+              //Continue setting all values 
+          }
+         
+         
+         
+         /**
           * This method will react when the buttons are pushed
           */
           public void actionPerformed(ActionEvent e) {
@@ -203,6 +214,7 @@ public class MainGolf implements ActionListener, ChangeListener
               //Determines what to do when action is  detected
               if (command.equalsIgnoreCase("Start")){
                   //start simulation
+                  resetSettings();
                   timer = new Timer(TIMER_DELAY, this);
                   timer.setActionCommand("Timer");
                   timer.start();
