@@ -212,7 +212,7 @@ public class Ball
             System.out.println("matched time=0");
             x = getCurrentX();
             y = getCurrentY();
-        } else if ((getCurrentX() < lane.getOilPercentage()) || (getIsPin()) || (time < 0)) {
+        } else if ((time < 0)) {
         
             // no friction, linear velocity only
             
@@ -244,19 +244,7 @@ public class Ball
             
             
             x = deltaX + getCurrentX();
-            y = deltaY + getCurrentY(); 
-            
-            System.out.println("");
-            // linear velocity decreases due to friction
-            double newLinearVelocity = getVelocity() - (lane.getFriction() * GRAVITY_ACCELERATION * time);
-            if (newLinearVelocity < 0) {
-                newLinearVelocity = 0;
-            }
-            System.out.println("linear velocity changed from " + getVelocity() + " to " + newLinearVelocity);
-            setVelocity(newLinearVelocity);
-            
-            
-            System.out.println("");
+            y = deltaY + getCurrentY();
         }
         
 
