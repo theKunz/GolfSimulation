@@ -25,6 +25,8 @@ import java.awt.*;
 
 public class MainGolf implements ActionListener, ChangeListener 
 {
+    Course course = null;
+    
     JSlider friction;
     JSlider startPos;
     JSlider velocity;
@@ -56,8 +58,8 @@ public class MainGolf implements ActionListener, ChangeListener
     }
     
     public void initialize() {
-        Course c = new Course();
-        c.setBounds(30, 340, 740, 200);
+        course = new Course();
+        course.setBounds(30, 340, 740, 200);
         
         
         JFrame frame = new JFrame();
@@ -193,11 +195,41 @@ public class MainGolf implements ActionListener, ChangeListener
          }
          
          /**
-          * This method will take 
+          * This method will react when the buttons are pushed
           */
           public void actionPerformed(ActionEvent e) {
               String command = e.getActionCommand();
               
+              //Determines what to do when action is  detected
+              if (command.equalsIgnoreCase("Start")){
+                  //start simulation
+                  timer = new Timer(TIMER_DELAY, this);
+                  timer.setActionCommand("Timer");
+                  timer.start();
+              }
+              else if (command.equalsIgnoreCase("Reset")){
+                  //reset simulation
+                  //TO_DO make a method that resets the simulation
+                  
+              }
+              else if (command.equalsIgnoreCase("Pause")){
+                  //pause simulation 
+                  timer.stop();
+                  sbutton.setActionCommand("Restart");
+                  sbutton.setText("Restart");
+              }
+              else if (command.equalsIgnoreCase("Restart")){
+                  //Restarts the simulation 
+                  timer.start();
+                  sbutton.setActionCommand("Start");
+                  sbutton.setText("Start");
+              }
+              else if (command.equalsIgnoreCase("Timer")){
+                  double delayTime = (double) timer.getDelay() / 1000.0;
+                  course.setTime(delayTime);
+                  course.repaint();
+              }
+
           }
     
 }
