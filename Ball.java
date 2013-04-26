@@ -187,8 +187,8 @@ public class Ball
     
     public void move (double time)
     {
-        calcX(getDistance(time, initialVelocity));
-        calcY(getDistance(time, initialVelocity));
+        calcX(getDistance(time));
+        calcY(getDistance(time));
         System.out.println( getCurrentX());
         System.out.println( getCurrentY());
     }
@@ -287,4 +287,3 @@ public class Ball
     }
     */
 
-}
