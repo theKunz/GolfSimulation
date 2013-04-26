@@ -44,6 +44,8 @@ public class MainGolf implements ActionListener, ChangeListener
     JButton rbutton;
     //The pause button
     JButton pbutton;
+    final int FRAME_HEIGHT = 800;
+    final int FRAME_WIDTH = 1200;
     
     
     public MainGolf()
@@ -69,11 +71,12 @@ public class MainGolf implements ActionListener, ChangeListener
         
         JFrame frame = new JFrame();
         frame.setTitle("Minigolf Simulation");
+        frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
-        frame.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
-        600);
+        //frame.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
+        //600);
         
         //Potentially organize it with more JPanels
         //menu = new JPanel();
@@ -128,15 +131,28 @@ public class MainGolf implements ActionListener, ChangeListener
         JPanel topPanel = new JPanel();
         topPanel.setPreferredSize(new Dimension(FRAME_WIDTH,(FRAME_HEIGHT / 2)));
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-	    topPanel.setBackground(Color.WHITE);
+	topPanel.setBackground(Color.WHITE);
         JPanel topLeftPanel = new JPanel();
+        topLeftPanel.setPreferredSize(new Dimension((FRAME_WIDTH / 2),(FRAME_HEIGHT / 2)));
+	topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.Y_AXIS));
         JPanel topRightPanel = new JPanel();
+        topRightPanel.setPreferredSize(new Dimension((FRAME_WIDTH / 2),(FRAME_HEIGHT / 2)));
+	topRightPanel.setLayout(new BoxLayout(topRightPanel, BoxLayout.Y_AXIS));
         
         //Creates the Panels to organize the top of the jframe
         JPanel bottomPanel = new JPanel();
+        bottomPanel.setPreferredSize(new Dimension(FRAME_WIDTH,(FRAME_HEIGHT / 2)));
+	bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
         JPanel bottomLeftPanel = new JPanel();
+        bottomLeftPanel.setLayout(new BoxLayout(bottomLeftPanel, BoxLayout.Y_AXIS));
+        //We may need to play with these values to make it look good
+        Dimension blp = new Dimension(10, 10);
+        bottomLeftPanel.setPreferredSize(blp);
         JPanel bottomRightPanel = new JPanel();
-        
+        bottomRightPanel.setLayout(new BoxLayout(bottomRightPanel, BoxLayout.Y_AXIS));
+        //We shoud make a getWidth method for the course
+        Dimensions brp = new Dimension (750, 150);
+        bottomRightPanel.setPreferredSize(brp);
         //Makes the top left Panel which whill hold the horizontal sliders 
         topLeftPanel.add(friction);
         topLeftPanel.add(startPos);
@@ -149,6 +165,21 @@ public class MainGolf implements ActionListener, ChangeListener
         
         topPanel.add(topLeftPanel);
         topPanel.add(topRightPanel);
+
+        bottomLeftPanel.add(Box.createRigidArea(new Dimension(0, 100)));
+        bottomLeftPanel.add(startPos);
+        
+        bottomRightPanel.add(course);
+        
+        bottomPanel.add(bottomLeftPanel);
+        bottomPanel.add(bottomRightPanel);
+        
+        jframe.add(topPanel);
+        jframe.add(bottomPanel);
+        
+        //This call makes all of the layouts fit the preferred size
+        jframe.pack();
+        jframe.setVisible(true);
         
         
         
