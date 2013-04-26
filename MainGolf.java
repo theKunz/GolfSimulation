@@ -241,6 +241,13 @@ public class MainGolf implements ActionListener, ChangeListener
                   course.setTime(delayTime);
                   course.repaint();
               }
+              
+              public void stateChanged(ChangeEvent e){
+                  JSlider source = (JSlider) e.getSource();
+                  if(!source.getValueIsAdjusting()){
+                      resetSettings();
+                  }
+              }
 
           }
     
