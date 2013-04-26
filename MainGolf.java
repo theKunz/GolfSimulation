@@ -32,6 +32,9 @@ public class MainGolf implements ActionListener, ChangeListener
 {
     Course course = null;
     
+    Timer timer;
+    static double testTime;
+    
     JSlider friction;
     JSlider startPos;
     JSlider velocity;
@@ -58,6 +61,7 @@ public class MainGolf implements ActionListener, ChangeListener
         
         MainGolf golfSimulation = new MainGolf();
         golfSimulation.initialize();
+        testTime = 0.0;
         
         
  
@@ -66,20 +70,18 @@ public class MainGolf implements ActionListener, ChangeListener
     
     public void initialize() {
         course = new Course();
-        course.setBounds(30, 340, 740, 200);
-        
         
         JFrame frame = new JFrame();
         frame.setTitle("Minigolf Simulation");
-        //frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
         frame.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
         600);
-        int fwidth = frame.getBounds().width;
-        int fheight = frame.getBounds().height();
         
+        int fwidth = frame.getWidth();
+        int fheight = frame.getHeight();
         //Potentially organize it with more JPanels
         //menu = new JPanel();
         //view = new JPanel();
@@ -112,7 +114,7 @@ public class MainGolf implements ActionListener, ChangeListener
         pbutton.setVisible(true);
         
         //Uses the frame size to set the size of the button
-        Dimension buttonSize = new Dimension( (center.x - 800 / 2) / 3, 99);
+        Dimension buttonSize = new Dimension( (center.x - 100 / 2) / 3, 99);
         
         sbutton.setPreferredSize(buttonSize);
         sbutton.setMinimumSize(buttonSize);
@@ -131,19 +133,19 @@ public class MainGolf implements ActionListener, ChangeListener
         
         //Creates the Panels to organize the top of the jframe
         JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(FRAME_WIDTH,(FRAME_HEIGHT / 2)));
+        topPanel.setPreferredSize(new Dimension(fwidth,(fheight / 2)));
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 	topPanel.setBackground(Color.WHITE);
         JPanel topLeftPanel = new JPanel();
-        topLeftPanel.setPreferredSize(new Dimension((FRAME_WIDTH / 2),(FRAME_HEIGHT / 2)));
+        topLeftPanel.setPreferredSize(new Dimension((fwidth / 2),(fheight / 2)));
 	topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.Y_AXIS));
         JPanel topRightPanel = new JPanel();
-        topRightPanel.setPreferredSize(new Dimension((FRAME_WIDTH / 2),(FRAME_HEIGHT / 2)));
+        topRightPanel.setPreferredSize(new Dimension((fwidth / 2),(fheight / 2)));
 	topRightPanel.setLayout(new BoxLayout(topRightPanel, BoxLayout.Y_AXIS));
         
         //Creates the Panels to organize the top of the jframe
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setPreferredSize(new Dimension(FRAME_WIDTH,(FRAME_HEIGHT / 2)));
+        bottomPanel.setPreferredSize(new Dimension(fwidth,(fheight / 2)));
 	bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
         JPanel bottomLeftPanel = new JPanel();
         bottomLeftPanel.setLayout(new BoxLayout(bottomLeftPanel, BoxLayout.Y_AXIS));
@@ -157,8 +159,9 @@ public class MainGolf implements ActionListener, ChangeListener
         bottomRightPanel.setPreferredSize(brp);
         //Makes the top left Panel which whill hold the horizontal sliders 
         topLeftPanel.add(friction);
-        topLeftPanel.add(startPos);
+        topLeftPanel.add(velocity);
         topLeftPanel.add(mass);
+        topLeftPanel.add(Box.createRigidArea(new Dimension(5000, 10)));
         
         //Makes the top right Panel which will hold the buttons 
         topRightPanel.add(sbutton);
@@ -168,7 +171,7 @@ public class MainGolf implements ActionListener, ChangeListener
         topPanel.add(topLeftPanel);
         topPanel.add(topRightPanel);
 
-        bottomLeftPanel.add(Box.createRigidArea(new Dimension(0, 100)));
+        bottomLeftPanel.add(Box.createRigidArea(new Dimension(700, 100)));
         bottomLeftPanel.add(startPos);
         
         bottomRightPanel.add(course);
@@ -176,8 +179,10 @@ public class MainGolf implements ActionListener, ChangeListener
         bottomPanel.add(bottomLeftPanel);
         bottomPanel.add(bottomRightPanel);
         
-        frame.add(topPanel);
-        frame.add(bottomPanel);
+        //frame.add(topPanel);
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(bottomPanel, BorderLayout.SOUTH);       
+        //frame.add(bottomPanel);
         
         //This call makes all of the layouts fit the preferred size
         frame.pack();
@@ -218,7 +223,7 @@ public class MainGolf implements ActionListener, ChangeListener
          mass = createSlider(MIN_MASS, MAX_MASS, INIT_MASS, sliderDimension, MIN_MASS + " mass",
                             MAX_MASS + " mass", "Mass of the ball");                  
          mass.setVisible(true);
-         velocity = createSlider(MIN_VEL, MAX_VEL, INIT_VEL, sliderDimension, "", "", "Velocity of the ball");
+         velocity = createSlider(MIN_VEL, MAX_VEL, INIT_VEL, sliderDimension, "", "", "Initial Velocity of the ball");
          
          //Since we want the starting position slider to be verticle we are not able to use the "createSlider" method
          startPos = new JSlider(JSlider.VERTICAL, MIN_POSIT, MAX_POSIT, INIT_POSIT);
@@ -264,7 +269,7 @@ public class MainGolf implements ActionListener, ChangeListener
          /**
           * This method will gather the data from the sliders and assign them to the simulation
           */ 
-          public void resestSettings(){
+          public void resetSettings(){
               Ball ball = course.getBall(); 
               course.setFriction(friction.getValue() / 10);
               ball.setMass(mass.getValue());
@@ -288,14 +293,16 @@ public class MainGolf implements ActionListener, ChangeListener
               if (command.equalsIgnoreCase("Start")){
                   //start simulation
                   resetSettings();
-                  timer = new Timer(TIMER_DELAY, this);
+                  timer = new Timer(150, this);
                   timer.setActionCommand("Timer");
                   timer.start();
+                 // course.paint(new Graphics);
+                  
               }
               else if (command.equalsIgnoreCase("Reset")){
                   //reset simulation
                   //TO_DO make a method that resets the simulation
-                  
+                  testTime = 0;                 
               }
               else if (command.equalsIgnoreCase("Pause")){
                   //pause simulation 
@@ -308,9 +315,13 @@ public class MainGolf implements ActionListener, ChangeListener
                   timer.start();
                   sbutton.setActionCommand("Start");
                   sbutton.setText("Start");
+                  testTime = 0;
               }
               else if (command.equalsIgnoreCase("Timer")){
-                  double delayTime = (double) timer.getDelay() / 1000.0;
+                  double delayTime = (double)timer.getDelay() / 1000.0;
+                  testTime += 0.01;
+                  //course.setTime(timer.getDelay());
+                  System.out.println("The delay is " + timer.getDelay());
                   course.setTime(delayTime);
                   course.repaint();
               }
