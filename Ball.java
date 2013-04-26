@@ -203,6 +203,11 @@ public class Ball
         return massBall;
     }
     
+    public void setInitialY(int y)
+    {
+        this.currentY = y;
+    }
+    
     public void collisionOccured()
     {
         if (getCurrentY() < 1)
