@@ -1,3 +1,5 @@
+package course;
+
 /**
  * The model for the physics for the ball.
  * @author Steven Whitehead
@@ -21,28 +23,28 @@ public class Ball
     private double angle;
     private final double GRAVITY_ACCEL;
     private Course course;
-    private int radius; 
+    private int radius;
+    private double coeffOfFriction;
 
     /**
      * constructor
      */
     public Ball()
     {
-        double p = 0.131;
+        coeffOfFriction = 1;
         GRAVITY_ACCEL = 9.81;
         initialVelocity = 0;
-        accel = - (5 / 7) * p * GRAVITY_ACCEL;
+        accel = - coeffOfFriction * GRAVITY_ACCEL;
     }
     /**
      * constructor while entering a coefficient of friction
-     * Note that p = N / R, where N is the normal force and R
-     * is the radius of the ball.
      * @param p the coefficient of friction.
      */
     public Ball(float p)
     {
         GRAVITY_ACCEL = 9.81;
-        accel = - (5 / 7) * p * GRAVITY_ACCEL;
+        coeffOfFriction = p;
+        accel = - coeffOfFriction * GRAVITY_ACCEL;
     }
 
     /**
@@ -52,10 +54,10 @@ public class Ball
      * @param veloInit the initial velocity
      * @return the distance it went
      */
-    public double getDistance(double time, double veloInit)
+    public double getDistance(double time)
     {
         double d = 0;
-        d = veloInit * time + (1 / 2) * accel * time * time;
+        d = getInitialVelocity() * time + (1 / 2) * accel * time * time;
         return d;
     }
     
@@ -199,6 +201,23 @@ public class Ball
     public double getMass()
     {
         return massBall;
+    }
+    
+    public void collisionOccured()
+    {
+        if (getCurrentY() < 1)
+        {
+            
+            angle += -180;
+            
+            
+        }
+        else if (getCurrentY() > Course.length)
+        {
+            angle += -180;
+        }
+        System.out.println("A collision occured at " + getCurrentX() ", " + getCurrentY() );
+    }
     }
     /*
      public void move (double time) {
