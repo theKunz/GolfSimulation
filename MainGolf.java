@@ -71,7 +71,7 @@ public class MainGolf implements ActionListener, ChangeListener
         
         JFrame frame = new JFrame();
         frame.setTitle("Minigolf Simulation");
-        frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
@@ -91,9 +91,9 @@ public class MainGolf implements ActionListener, ChangeListener
         //view.add(c);
         
         //f.add(view, BorderLayout.SOUTH);
-        frame.add(menu);
-        frame.add(course);
-        frame.setVisible(true);
+        //frame.add(menu);
+       // frame.add(course);
+       // frame.setVisible(true);
         frame.setResizable(false);
         
         //Setting up the buttons for the JFrame 
@@ -110,7 +110,7 @@ public class MainGolf implements ActionListener, ChangeListener
         pbutton.setVisible(true);
         
         //Uses the frame size to set the size of the button
-        Dimension buttonSize = new Dimension ((center.x - 800 / 2)) / 3, 99);
+        Dimension buttonSize = new Dimension( (center.x - 800 / 2) / 3, 99);
         
         sbutton.setPreferredSize(buttonSize);
         sbutton.setMinimumSize(buttonSize);
@@ -151,7 +151,7 @@ public class MainGolf implements ActionListener, ChangeListener
         JPanel bottomRightPanel = new JPanel();
         bottomRightPanel.setLayout(new BoxLayout(bottomRightPanel, BoxLayout.Y_AXIS));
         //We shoud make a getWidth method for the course
-        Dimensions brp = new Dimension (750, 150);
+        Dimension brp = new Dimension (750, 150);
         bottomRightPanel.setPreferredSize(brp);
         //Makes the top left Panel which whill hold the horizontal sliders 
         topLeftPanel.add(friction);
@@ -174,12 +174,12 @@ public class MainGolf implements ActionListener, ChangeListener
         bottomPanel.add(bottomLeftPanel);
         bottomPanel.add(bottomRightPanel);
         
-        jframe.add(topPanel);
-        jframe.add(bottomPanel);
+        frame.add(topPanel);
+        frame.add(bottomPanel);
         
         //This call makes all of the layouts fit the preferred size
-        jframe.pack();
-        jframe.setVisible(true);
+        frame.pack();
+        frame.setVisible(true);
         
         
         
@@ -321,5 +321,7 @@ public class MainGolf implements ActionListener, ChangeListener
                   if(!source.getValueIsAdjusting()){
                       resetSettings();
                   }
+    
+}
     
 }
