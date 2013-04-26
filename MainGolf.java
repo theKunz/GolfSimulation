@@ -71,12 +71,14 @@ public class MainGolf implements ActionListener, ChangeListener
         
         JFrame frame = new JFrame();
         frame.setTitle("Minigolf Simulation");
-        frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        //frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
-        //frame.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
-        //600);
+        frame.setBounds(center.x - 800 / 2, center.y - 600 / 2, 800,
+        600);
+        int fwidth = frame.getBounds().width;
+        int fheight = frame.getBounds().height();
         
         //Potentially organize it with more JPanels
         //menu = new JPanel();
