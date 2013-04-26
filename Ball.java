@@ -56,8 +56,7 @@ public class Ball
      */
     public double getDistance(double time)
     {
-        double d = 0;
-        d = getInitialVelocity() * time + (1 / 2) * accel * time * time;
+        double d = getInitialVelocity() * time + (1 / 2) * accel * time * time;;
         return d;
     }
     
@@ -217,11 +216,11 @@ public class Ball
             
             
         }
-        else if (getCurrentY() > Course.length)
+        else if (getCurrentY() > course.getLength())
         {
             angle += -180;
         }
-        System.out.println("A collision occured at " + getCurrentX() ", " + getCurrentY() );
+        System.out.println("A collision occured at " + this.getCurrentX() ", " + this.getCurrentY() );
     }
     }
     /*
