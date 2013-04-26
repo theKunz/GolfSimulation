@@ -264,9 +264,10 @@ public class MainGolf implements ActionListener, ChangeListener
           */ 
           public void resestSettings(){
               Ball ball = course.getBall(); 
+              course.setFriction(friction.getValue() / 10);
               ball.setMass(mass.getValue());
               ball.setInitialVelocity(velocity.getValue());
-              ball.setCurrentY();
+              ball.setInitialY(startPos.getValue());
               //Continue setting all values 
           }
          
