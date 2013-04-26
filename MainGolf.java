@@ -76,14 +76,14 @@ public class MainGolf implements ActionListener, ChangeListener
         600);
         
         //Potentially organize it with more JPanels
-        menu = new JPanel();
-        view = new JPanel();
+        //menu = new JPanel();
+        //view = new JPanel();
 
         makeSliders();
-        menu.add(velocity);
-        menu.add(startPos);
-        menu.add(friction);
-        menu.add(mass);
+        //menu.add(velocity);
+        //menu.add(startPos);
+        //menu.add(friction);
+        //menu.add(mass);
         
         //view.add(c);
         
@@ -123,6 +123,35 @@ public class MainGolf implements ActionListener, ChangeListener
         rbutton.setMinimumSize(buttonSize);
         rbutton.setMaximumSize(buttonSize);
         rbutton.addActionListener(this);
+        
+        //Creates the Panels to organize the top of the jframe
+        JPanel topPanel = new JPanel();
+        topPanel.setPreferredSize(new Dimension(FRAME_WIDTH,(FRAME_HEIGHT / 2)));
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+	    topPanel.setBackground(Color.WHITE);
+        JPanel topLeftPanel = new JPanel();
+        JPanel topRightPanel = new JPanel();
+        
+        //Creates the Panels to organize the top of the jframe
+        JPanel bottomPanel = new JPanel();
+        JPanel bottomLeftPanel = new JPanel();
+        JPanel bottomRightPanel = new JPanel();
+        
+        //Makes the top left Panel which whill hold the horizontal sliders 
+        topLeftPanel.add(friction);
+        topLeftPanel.add(startPos);
+        topLeftPanel.add(mass);
+        
+        //Makes the top right Panel which will hold the buttons 
+        topRightPanel.add(sbutton);
+        topRightPanel.add(rbutton);
+        topRightPanel.add(pbutton);
+        
+        topPanel.add(topLeftPanel);
+        topPanel.add(topRightPanel);
+        
+        
+        
         
 
     }
