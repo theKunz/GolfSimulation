@@ -106,6 +106,7 @@ public class Course extends Canvas
     /**
      * returns the height
      */
+     @Override
     public int getHeight()
     {
         return height;
