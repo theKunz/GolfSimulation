@@ -11,6 +11,8 @@ package course;
 */
 
 import javax.swing.JFrame;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Color;
@@ -21,6 +23,9 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Hashtable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 public class MainGolf implements ActionListener, ChangeListener 
@@ -84,7 +89,7 @@ public class MainGolf implements ActionListener, ChangeListener
         
         //f.add(view, BorderLayout.SOUTH);
         frame.add(menu);
-        frame.add(c);
+        frame.add(course);
         frame.setVisible(true);
         frame.setResizable(false);
         
@@ -126,9 +131,9 @@ public class MainGolf implements ActionListener, ChangeListener
      * Makes the sliders for the frame 
      */
      public void makeSliders() {
-         final int MAX_FRIC = 0.6;
-         final int MIN_FRIC = 0.35;
-         final int INIT_FRIC = 0.4;
+         final int MAX_FRIC = 6;
+         final int MIN_FRIC = 3;
+         final int INIT_FRIC = 4;
          
          final int MAX_POSIT = 50;
          final int MIN_POSIT = 20;
@@ -151,14 +156,14 @@ public class MainGolf implements ActionListener, ChangeListener
          mass = createSlider(MIN_MASS, MAX_MASS, INIT_MASS, sliderDimension, MIN_MASS + " mass",
                             MAX_MASS + " mass", "Mass of the ball");                  
          mass.setVisible(true);
-         velcity = createSlider(MIN_VEL, MAX_VEL, INIT_VEL, sliderDimension, "", "", "Velocity of the ball");
+         velocity = createSlider(MIN_VEL, MAX_VEL, INIT_VEL, sliderDimension, "", "", "Velocity of the ball");
          
          //Since we want the starting position slider to be verticle we are not able to use the "createSlider" method
          startPos = new JSlider(JSlider.VERTICAL, MIN_POSIT, MAX_POSIT, INIT_POSIT);
          startPos.setPreferredSize(sliderDimension);
          startPos.setMaximumSize(sliderDimension);
          startPos.setMinimumSize(sliderDimension);
-         startPos = createSlider(MIN_POS, MAX_POS, INIT_POS, sliderD);   
+         //startPos = createSlider(MIN_POSIT, MAX_POSIT, INIT_POSIT, sliderDimension);   
          Hashtable temp = new Hashtable();
              temp.put ( new Integer (INIT_POSIT), new JLabel ("Position"));
              temp.put ( new Integer (MIN_POSIT), new JLabel (""));
@@ -241,14 +246,14 @@ public class MainGolf implements ActionListener, ChangeListener
                   course.setTime(delayTime);
                   course.repaint();
               }
-              
-              public void stateChanged(ChangeEvent e){
+
+          }
+
+    @Override
+    public void stateChanged(ChangeEvent e){
                   JSlider source = (JSlider) e.getSource();
                   if(!source.getValueIsAdjusting()){
                       resetSettings();
                   }
-              }
-
-          }
     
 }
