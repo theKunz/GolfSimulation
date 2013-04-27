@@ -161,6 +161,16 @@ public class Ball
     public void calcX(double distance)
     {
         currentX = distance * Math.cos(angle) + initialX;
+        
+        if(currentX >= 675)
+        {
+            currentX = 675;
+        } else if (currentX < 20)
+        {
+            currentX = 20;
+        }
+        
+
     }
     
     /**
@@ -200,6 +210,15 @@ public class Ball
     public void calcY(double distance)
     {
         currentY = distance * Math.sin(angle) + initialY;
+        
+        if(currentY >= 155)
+        {
+            currentY = 155;
+        } else if (currentY < 20)
+        {
+            currentY = 20;
+        }
+
     }
     
     public void move (double time)
