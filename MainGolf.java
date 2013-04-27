@@ -62,7 +62,7 @@ public class MainGolf implements ActionListener, ChangeListener
         
         MainGolf golfSimulation = new MainGolf();
         golfSimulation.initialize();
-        testTime = 0.0;
+        testTime = 1;
         
         
  
@@ -151,12 +151,12 @@ public class MainGolf implements ActionListener, ChangeListener
         JPanel bottomLeftPanel = new JPanel();
         bottomLeftPanel.setLayout(new BoxLayout(bottomLeftPanel, BoxLayout.Y_AXIS));
         //We may need to play with these values to make it look good
-        Dimension blp = new Dimension(10, 10);
+        Dimension blp = new Dimension(70, course.getHeight());
         bottomLeftPanel.setPreferredSize(blp);
         JPanel bottomRightPanel = new JPanel();
-        bottomRightPanel.setLayout(new BoxLayout(bottomRightPanel, BoxLayout.Y_AXIS));
+        bottomRightPanel.setLayout(new BoxLayout(bottomRightPanel, BoxLayout.X_AXIS));
         //We shoud make a getWidth method for the course
-        Dimension brp = new Dimension (750, 150);
+        Dimension brp = new Dimension (course.getWidth(), course.getHeight());
         bottomRightPanel.setPreferredSize(brp);
         //Makes the top left Panel which whill hold the horizontal sliders 
         topLeftPanel.add(friction);
@@ -173,12 +173,15 @@ public class MainGolf implements ActionListener, ChangeListener
         topPanel.add(topLeftPanel);
         topPanel.add(topRightPanel);
 
-        bottomLeftPanel.add(Box.createRigidArea(new Dimension(700, 100)));
+        //bottomLeftPanel.add(Box.createRigidArea(new Dimension(50, 100)));
         bottomLeftPanel.add(startPos);
+        bottomLeftPanel.add(Box.createRigidArea(new Dimension(50, 105)));
         
         bottomRightPanel.add(course);
         
+       bottomPanel.add(Box.createRigidArea(new Dimension(80, 140)));
         bottomPanel.add(bottomLeftPanel);
+     //  bottomPanel.add(Box.createRigidArea(new Dimension(100, 100)));
         bottomPanel.add(bottomRightPanel);
         
         //frame.add(topPanel);
@@ -204,9 +207,9 @@ public class MainGolf implements ActionListener, ChangeListener
          final int MIN_FRIC = 3;
          final int INIT_FRIC = 4;
          
-         final int MAX_POSIT = 50;
+         final int MAX_POSIT = course.getHeight() - 20;
          final int MIN_POSIT = 20;
-         final int INIT_POSIT = 30;
+         final int INIT_POSIT = course.getHeight()/2;
          
          final int MAX_MASS = 50;
          final int MIN_MASS = 20;
@@ -236,9 +239,10 @@ public class MainGolf implements ActionListener, ChangeListener
          angle.setVisible(true);
          //Since we want the starting position slider to be verticle we are not able to use the "createSlider" method
          startPos = new JSlider(JSlider.VERTICAL, MIN_POSIT, MAX_POSIT, INIT_POSIT);
-         startPos.setPreferredSize(sliderDimension);
-         startPos.setMaximumSize(sliderDimension);
-         startPos.setMinimumSize(sliderDimension);
+         Dimension vertSlider = new Dimension(70, course.getHeight());
+         startPos.setPreferredSize(vertSlider);
+         startPos.setMaximumSize(vertSlider);
+         startPos.setMinimumSize(vertSlider);
          //startPos = createSlider(MIN_POSIT, MAX_POSIT, INIT_POSIT, sliderDimension);   
          Hashtable temp = new Hashtable();
              temp.put ( new Integer (INIT_POSIT), new JLabel ("Position"));
@@ -283,8 +287,7 @@ public class MainGolf implements ActionListener, ChangeListener
               course.setFriction(friction.getValue() / 10);
               ball.setMass(mass.getValue());
               ball.setInitialVelocity(velocity.getValue());
-              ball.setCurrentX(startPos.getValue());
-              ball.setCurrentY(startPos.getValue());
+              ball.setInitialY(course.getHeight() - startPos.getValue());
               ball.setAngle(angle.getValue());
               
               //Repaints the course with the new setings
@@ -304,7 +307,7 @@ public class MainGolf implements ActionListener, ChangeListener
               if (command.equalsIgnoreCase("Start")){
                   //start simulation
                   resetSettings();
-                  timer = new Timer(150, this);
+                  timer = new Timer(10, this);
                   timer.setActionCommand("Timer");
                   timer.start();
                  // course.paint(new Graphics);
@@ -313,7 +316,11 @@ public class MainGolf implements ActionListener, ChangeListener
               else if (command.equalsIgnoreCase("Reset")){
                   //reset simulation
                   //TO_DO make a method that resets the simulation
-                  testTime = 0;                 
+                  timer.stop();
+                  testTime = 0; 
+                  course.getBall().setCurrentX(35);
+                  course.getBall().setCurrentY(startPos.getValue());
+                  course.repaint();
               }
               else if (command.equalsIgnoreCase("Pause")){
                   //pause simulation 
@@ -326,14 +333,13 @@ public class MainGolf implements ActionListener, ChangeListener
                   timer.start();
                   sbutton.setActionCommand("Start");
                   sbutton.setText("Start");
-                  testTime = 0;
               }
               else if (command.equalsIgnoreCase("Timer")){
                   double delayTime = (double)timer.getDelay() / 1000.0;
                   testTime += 0.01;
                   //course.setTime(timer.getDelay());
                   System.out.println("The delay is " + timer.getDelay());
-                  course.setTime(delayTime + testTime);
+                  course.setTime(testTime);
                   course.repaint();
               }
 
