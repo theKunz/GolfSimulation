@@ -63,7 +63,7 @@ public class Ball
         double d = getInitialVelocity() * time + (1 / 2) * accel * time * time;
         return d;
     }
-    
+
     /**
     * Calculate the current velocity given a time value.
     * @param time the time value
@@ -72,52 +72,52 @@ public class Ball
     {
         currentVelocity = initialVelocity + accel * time;
     }
-    
+
     /**
      * Get the current velocity
-     * @return the current velocity 
+     * @return the current velocity
      */
     public double getCurrentVelocity()
     {
         return currentVelocity;
     }
-    
+
     /**
     * Calculate the velocity in the X direction.
     * @param angle the angle at which it was hit with the horizontal
     */
     public void calcVelocityX(float ang)
-    {   
+    {
         currentVelocityX = currentVelocity * Math.cos(angle);
     }
-    
+
     /**
     * Get the velocity in the X direction.
     * @return the x velocity
     */
     public double getVelocityX()
-    {   
-        return currentVelocityX; 
+    {
+        return currentVelocityX;
     }
-    
+
     /**
     * Calculate the velocity in the Y direction.
     * @param angle the angle at which it was hit with the horizontal
     */
     public void calcVelocityY(float ang)
-    {   
+    {
         currentVelocityY = currentVelocity * Math.sin(angle);
     }
-    
+
     /**
     * Get the velocity in the Y direction.
     * @return the y velocity
     */
     public double getVelocityY()
-    {   
-        return currentVelocityY; 
+    {
+        return currentVelocityY;
     }
-    
+
     /**
      * Given a few inputs, find the initial velocity
      * of the putt
@@ -125,15 +125,15 @@ public class Ball
      * @param massBall the mass of the ball
      * @param massClub the mass of the club
      * @param coeffOfRestit the coefficitent of restitution
-     * 
+     *
      */
-    public void calcInitalVelocity(double clubSpeed, double massBall, 
+    public void calcInitalVelocity(double clubSpeed, double massBall,
         double massClub, double coeffOfRestit)
     {
-        initialVelocity = (clubSpeed * coeffOfRestit) / 
-            (1.0 + (massBall / massClub));       
+        initialVelocity = (clubSpeed * coeffOfRestit) /
+            (1.0 + (massBall / massClub));
     }
-    
+
     /**
      * Set the initial velocity to any value you want
      * @param initVelo the initial velocity you want
@@ -142,7 +142,7 @@ public class Ball
     {
         initialVelocity = initVelo;
     }
-   
+
     /**
      * Return the initial velocity
      * @return the initial velocity
@@ -151,7 +151,7 @@ public class Ball
     {
         return initialVelocity;
     }
-        
+
     /**
      * Given a distance, find the x coordinate
      * @param distance how far the ball is from
@@ -161,7 +161,7 @@ public class Ball
     public void calcX(double distance)
     {
         currentX = distance * Math.cos(angle) + initialX;
-        
+
         if(currentX >= 675)
         {
             currentX = 675;
@@ -169,38 +169,38 @@ public class Ball
         {
             currentX = 20;
         }
-        
+
 
     }
-    
+
     /**
      * Get the current x position
      */
-     
+
     public double getCurrentX()
     {
         return currentX;
     }
-    
+
     public double getCurrentY()
     {
         return currentY;
     }
-    
+
     /**
      * Get the current x position
      */
-     
+
     public void setCurrentX(double x)
     {
         this.currentX = x;
     }
-    
+
     public void setCurrentY(double y)
     {
         this.currentY = y;
     }
-    
+
     /**
      * Given a distance, find the y coordinate
      * @param distance how far the ball is from
@@ -210,7 +210,7 @@ public class Ball
     public void calcY(double distance)
     {
         currentY = distance * Math.sin(angle) + initialY;
-        
+
         if(currentY >= 155)
         {
             currentY = 155;
@@ -220,13 +220,13 @@ public class Ball
         }
 
     }
-    
+
     public void move (double time)
     {
-        
+
             calcX(getDistance(time));
             calcY(getDistance(time));
-        
+
         System.out.println( getCurrentX());
         System.out.println( getCurrentY());
     }
@@ -235,25 +235,25 @@ public class Ball
     {
         massBall = m;
     }
-    
+
     public double getMass()
     {
         return massBall;
     }
-    
+
     public void setInitialY(int y)
     {
         this.initialY = y;
     }
-    
+
     public void collisionOccured()
     {
         if (getCurrentY() < 1)
         {
-            
+
             angle += -180;
-            
-            
+
+
         }
         else if (getCurrentY() > course.getLength())
         {
@@ -262,19 +262,22 @@ public class Ball
         //System.out.println("A collision occured at " + this.getCurrentX() ", " + this.getCurrentY() );
     }
     /**
-     * 
+     *
      */
     public void setAngle(double ang)
     {
         this.angle = ang;
     }
     /**
-     * 
+     *
      */
     public double getAngle()
     {
         return angle;
     }
-    }    
-    
- 
+
+    public void setCurrentVelocity(double vel) {
+        currentVelocity = vel;
+    }
+    }
+
