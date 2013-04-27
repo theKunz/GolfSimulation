@@ -38,7 +38,7 @@ public class Ball
         currentX = 35;
         currentY = 80;
         initialVelocity = 0;
-        accel = - coeffOfFriction * GRAVITY_ACCEL;
+        accel = -1 * coeffOfFriction * GRAVITY_ACCEL;
     }
     /**
      * constructor while entering a coefficient of friction
@@ -48,7 +48,7 @@ public class Ball
     {
         GRAVITY_ACCEL = 9.81;
         coeffOfFriction = p;
-        accel = - coeffOfFriction * GRAVITY_ACCEL;
+        accel = -1 * coeffOfFriction * GRAVITY_ACCEL;
     }
 
     /**
