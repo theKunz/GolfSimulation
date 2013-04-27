@@ -38,6 +38,7 @@ public class MainGolf implements ActionListener, ChangeListener
     JSlider friction;
     JSlider startPos;
     JSlider velocity;
+    JSlider angle;
     JSlider mass;
     JPanel menu;
     JPanel view;
@@ -161,6 +162,7 @@ public class MainGolf implements ActionListener, ChangeListener
         topLeftPanel.add(friction);
         topLeftPanel.add(velocity);
         topLeftPanel.add(mass);
+        topLeftPanel.add(angle);
         topLeftPanel.add(Box.createRigidArea(new Dimension(5000, 10)));
         
         //Makes the top right Panel which will hold the buttons 
@@ -214,6 +216,10 @@ public class MainGolf implements ActionListener, ChangeListener
          final int MIN_VEL = 20;
          final int INIT_VEL = 30;
          
+         final int MAX_ANG = 45;
+         final int MIN_ANG = -45;
+         final int INIT_ANG = 0;
+         
          Dimension sliderDimension = new Dimension (300, 70);
 
          
@@ -224,7 +230,10 @@ public class MainGolf implements ActionListener, ChangeListener
                             MAX_MASS + " mass", "Mass of the ball");                  
          mass.setVisible(true);
          velocity = createSlider(MIN_VEL, MAX_VEL, INIT_VEL, sliderDimension, "", "", "Initial Velocity of the ball");
+         velocity.setVisible(true);
          
+         angle = createSlider(MIN_ANG, MAX_ANG, INIT_ANG, sliderDimension, "-45", "45", "Angle");
+         angle.setVisible(true);
          //Since we want the starting position slider to be verticle we are not able to use the "createSlider" method
          startPos = new JSlider(JSlider.VERTICAL, MIN_POSIT, MAX_POSIT, INIT_POSIT);
          startPos.setPreferredSize(sliderDimension);
@@ -275,6 +284,7 @@ public class MainGolf implements ActionListener, ChangeListener
               ball.setMass(mass.getValue());
               ball.setInitialVelocity(velocity.getValue());
               ball.setInitialY(startPos.getValue());
+              ball.setAngle(angle.getValue());
               
               //Repaints the course with the new setings
               course.repaint();
