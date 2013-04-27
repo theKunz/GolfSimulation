@@ -283,7 +283,8 @@ public class MainGolf implements ActionListener, ChangeListener
               course.setFriction(friction.getValue() / 10);
               ball.setMass(mass.getValue());
               ball.setInitialVelocity(velocity.getValue());
-              ball.setInitialY(startPos.getValue());
+              ball.setCurrentX(startPos.getValue());
+              ball.setCurrentY(startPos.getValue());
               ball.setAngle(angle.getValue());
               
               //Repaints the course with the new setings
@@ -332,7 +333,7 @@ public class MainGolf implements ActionListener, ChangeListener
                   testTime += 0.01;
                   //course.setTime(timer.getDelay());
                   System.out.println("The delay is " + timer.getDelay());
-                  course.setTime(delayTime);
+                  course.setTime(delayTime + testTime);
                   course.repaint();
               }
 
