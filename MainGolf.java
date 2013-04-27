@@ -1,15 +1,4 @@
 package course;
-/*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
-
-/**
-*
-* @author Andrew Koh
-* @author Aaron Kunzer
-*/
-
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.*;
@@ -306,6 +295,8 @@ public class MainGolf implements ActionListener, ChangeListener
               //Determines what to do when action is  detected
               if (command.equalsIgnoreCase("Start")){
                   //start simulation
+                  course.getBall().setInitialVelocity(0);
+                  course.getBall().setCurrentVelocity(0);
                   testTime = 0;
                   resetSettings();
                   timer = null;
