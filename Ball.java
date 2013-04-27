@@ -33,10 +33,10 @@ public class Ball
     {
         coeffOfFriction = 1;
         GRAVITY_ACCEL = 9.81;
-        initialX = 20;
-        initialY = 20;
-        currentX = 20;
-        currentY = 20;
+        initialX = 35;
+        initialY = 80;
+        currentX = 35;
+        currentY = 80;
         initialVelocity = 0;
         accel = - coeffOfFriction * GRAVITY_ACCEL;
     }
@@ -60,7 +60,7 @@ public class Ball
      */
     public double getDistance(double time)
     {
-        double d = getInitialVelocity() * time + (1 / 2) * accel * time * time;;
+        double d = getInitialVelocity() * time + (1 / 2) * accel * time * time;
         return d;
     }
     
@@ -160,7 +160,7 @@ public class Ball
      */
     public void calcX(double distance)
     {
-        currentX = distance * Math.cos(angle);
+        currentX = distance * Math.cos(angle) + initialX;
     }
     
     /**
@@ -199,13 +199,15 @@ public class Ball
      */
     public void calcY(double distance)
     {
-        currentY = distance * Math.sin(angle);
+        currentY = distance * Math.sin(angle) + initialY;
     }
     
     public void move (double time)
     {
-        calcX(getDistance(time));
-        calcY(getDistance(time));
+        
+            calcX(getDistance(time));
+            calcY(getDistance(time));
+        
         System.out.println( getCurrentX());
         System.out.println( getCurrentY());
     }
@@ -222,7 +224,7 @@ public class Ball
     
     public void setInitialY(int y)
     {
-        this.currentY = y;
+        this.initialY = y;
     }
     
     public void collisionOccured()
@@ -238,7 +240,7 @@ public class Ball
         {
             angle += -180;
         }
-        System.out.println("A collision occured at " + this.getCurrentX() ", " + this.getCurrentY() );
+        //System.out.println("A collision occured at " + this.getCurrentX() ", " + this.getCurrentY() );
     }
     /**
      * 
