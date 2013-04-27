@@ -33,6 +33,10 @@ public class Ball
     {
         coeffOfFriction = 1;
         GRAVITY_ACCEL = 9.81;
+        initialX = 20;
+        initialY = 20;
+        currentX = 20;
+        currentY = 20;
         initialVelocity = 0;
         accel = - coeffOfFriction * GRAVITY_ACCEL;
     }
@@ -174,6 +178,20 @@ public class Ball
     }
     
     /**
+     * Get the current x position
+     */
+     
+    public void setCurrentX(double x)
+    {
+        this.currentX = x;
+    }
+    
+    public void setCurrentY(double y)
+    {
+        this.currentY = y;
+    }
+    
+    /**
      * Given a distance, find the y coordinate
      * @param distance how far the ball is from
      * it's original position
@@ -222,7 +240,22 @@ public class Ball
         }
         System.out.println("A collision occured at " + this.getCurrentX() ", " + this.getCurrentY() );
     }
+    /**
+     * 
+     */
+    public void setAngle(double ang)
+    {
+        this.angle = ang;
     }
+    /**
+     * 
+     */
+    public double getAngle()
+    {
+        return angle;
+    }
+    }    
+    
     /*
      public void move (double time) {
     
