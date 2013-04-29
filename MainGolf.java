@@ -285,7 +285,7 @@ public class MainGolf implements ActionListener, ChangeListener
               ball.setMass(mass.getValue());
               ball.setInitialVelocity(velocity.getValue());
               ball.setInitialY(course.getHeight() - startPos.getValue());
-              ball.setAngle(angle.getValue() * (Math.PI/180));
+              ball.setAngle(angle.getValue() * (Math.PI/180) * -1);
 
               //Repaints the course with the new setings
               course.repaint();
