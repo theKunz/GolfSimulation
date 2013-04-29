@@ -119,9 +119,9 @@ public class Ball
     public void calcX()
     {
         currentVelocityX = (initialVelocity + (accel * time)) * Math.cos(angle);
-        if (Math.abs(currentVelocityX) <= 0.0)
+        if (Math.abs(currentVelocityX) <= 0.0000)
         {
-            currentVelocityX = 0.0;
+            currentVelocityX = 0;
         }
         currentX = initialX + (currentVelocityX * time);
         initialX = currentX;
@@ -183,7 +183,7 @@ public class Ball
     public void calcY()
     {
         currentVelocityY = (initialVelocity + (accel * time)) * Math.sin(angle);
-        if (Math.abs(currentVelocityY) <= 0.0)
+        if (Math.abs(currentVelocityY) <= 0.0000)
         {
             currentVelocityY = 0.0;
         }
