@@ -59,7 +59,6 @@ public class MainGolf implements ActionListener, ChangeListener
     }
 
     public void initialize() {
-        course = new Course();
 
         JFrame frame = new JFrame();
         frame.setTitle("Minigolf Simulation");
@@ -75,8 +74,14 @@ public class MainGolf implements ActionListener, ChangeListener
         //Potentially organize it with more JPanels
         //menu = new JPanel();
         //view = new JPanel();
-
+        course = new Course();
         makeSliders();
+        course.getBall().setTime(0.01);
+        double fin = (double)friction.getValue();
+        fin = fin / 30;
+        course.getBall().setFriction(fin);
+        course.getBall().setFriction(friction.getValue());
+        course.getBall().setInitialVelocity(velocity.getValue() * 6);
         //menu.add(velocity);
         //menu.add(startPos);
         //menu.add(friction);
@@ -132,6 +137,7 @@ public class MainGolf implements ActionListener, ChangeListener
         JPanel topRightPanel = new JPanel();
         topRightPanel.setPreferredSize(new Dimension((fwidth / 2),(fheight / 2)));
     topRightPanel.setLayout(new BoxLayout(topRightPanel, BoxLayout.Y_AXIS));
+    
 
         //Creates the Panels to organize the top of the jframe
         JPanel bottomPanel = new JPanel();
@@ -170,7 +176,7 @@ public class MainGolf implements ActionListener, ChangeListener
 
        bottomPanel.add(Box.createRigidArea(new Dimension(80, 140)));
         bottomPanel.add(bottomLeftPanel);
-     //  bottomPanel.add(Box.createRigidArea(new Dimension(100, 100)));
+     // bottomPanel.add(Box.createRigidArea(new Dimension(100, 100)));
         bottomPanel.add(bottomRightPanel);
 
         //frame.add(topPanel);
@@ -189,8 +195,8 @@ public class MainGolf implements ActionListener, ChangeListener
     }
 
     /**
-     * Makes the sliders for the frame
-     */
+* Makes the sliders for the frame
+*/
      public void makeSliders() {
          final int MAX_FRIC = 6;
          final int MIN_FRIC = 3;
@@ -245,8 +251,8 @@ public class MainGolf implements ActionListener, ChangeListener
      }
 
      /**
-      * This method will create a new JSlider
-      */
+* This method will create a new JSlider
+*/
       public JSlider createSlider (int min, int max, int init, Dimension y, String mini, String maxi, String initi){
              JSlider temporarySlider = new JSlider(JSlider.HORIZONTAL, min, max, init);
              temporarySlider.setPreferredSize(y);
@@ -269,15 +275,17 @@ public class MainGolf implements ActionListener, ChangeListener
          }
 
          /**
-          * This method will gather the data from the sliders and assign them to the simulation
-          */
+* This method will gather the data from the sliders and assign them to the simulation
+*/
           public void resetSettings(){
               Ball ball = course.getBall();
-              course.setFriction(friction.getValue() / 10);
+              double fin = (double)friction.getValue();
+              fin = fin / 30;
+              ball.setFriction(fin);
               ball.setMass(mass.getValue());
               ball.setInitialVelocity(velocity.getValue());
               ball.setInitialY(course.getHeight() - startPos.getValue());
-              ball.setAngle(angle.getValue());
+              ball.setAngle(angle.getValue() * (Math.PI/180));
 
               //Repaints the course with the new setings
               course.repaint();
@@ -287,23 +295,24 @@ public class MainGolf implements ActionListener, ChangeListener
 
 
          /**
-          * This method will react when the buttons are pushed
-          */
+* This method will react when the buttons are pushed
+*/
           public void actionPerformed(ActionEvent e) {
               String command = e.getActionCommand();
 
-              //Determines what to do when action is  detected
+              //Determines what to do when action is detected
               if (command.equalsIgnoreCase("Start")){
                   //start simulation
-                  course.getBall().setInitialVelocity(0);
-                  course.getBall().setCurrentVelocity(0);
-                  testTime = 0;
+                  course.getBall().setInitialVelocity(velocity.getValue() * 6);
+                  course.getBall().setCurrentVelocity(velocity.getValue() * 6);
                   resetSettings();
+                  
                   timer = null;
                   timer = new Timer(10, this);
                   timer.setActionCommand("Timer");
                   timer.start();
-                 // course.paint(new Graphics);
+                  rbutton.setActionCommand("Reset");
+                  rbutton.setText("Reset");
 
               }
               else if (command.equalsIgnoreCase("Reset")){
@@ -312,42 +321,45 @@ public class MainGolf implements ActionListener, ChangeListener
                   timer.stop();
                   sbutton.setActionCommand("Start");
                   sbutton.setText("Start");
-                  testTime = 0;
-                  course.getBall().setCurrentX(35);
-                  course.getBall().setCurrentY(startPos.getValue());
-                  course.getBall().setInitialVelocity(0);
+                  course.makeNewBall();
+                  course.getBall().setTime(0.01);
+                  double fin = (double)friction.getValue();
+                  fin = fin / 30;
+                  course.getBall().setFriction(fin);
+                  course.getBall().setFriction(friction.getValue());
+                  course.getBall().setInitialVelocity(velocity.getValue() * 6);
                   course.repaint();
               }
               else if (command.equalsIgnoreCase("Pause")){
                   //pause simulation
                   timer.stop();
-                  sbutton.setActionCommand("Restart");
-                  sbutton.setText("Restart");
+                  sbutton.setActionCommand("Continue");
+                  sbutton.setText("Continue");
+                  rbutton.setActionCommand("Reset");
+                  rbutton.setText("Reset");
               }
-              else if (command.equalsIgnoreCase("Restart")){
-                  //Restarts the simulation
+              else if (command.equalsIgnoreCase("Continue")){
+                  //Continues the simulation
                   timer.start();
                   sbutton.setActionCommand("Start");
                   sbutton.setText("Start");
+                  rbutton.setActionCommand("Reset");
+                  rbutton.setText("Reset");
               }
-              else if (command.equalsIgnoreCase("Timer")){
-                  double delayTime = (double)timer.getDelay() / 1000.0;
-                  testTime += 0.01;
-                  //course.setTime(timer.getDelay());
-                  System.out.println("The delay is " + timer.getDelay());
-                  course.setTime(testTime);
+              else if (command.equalsIgnoreCase("Timer")){;
                   course.repaint();
               }
 
           }
 
     @Override
-    public void stateChanged(ChangeEvent e){
+    public void stateChanged(ChangeEvent e)
+    {
                   JSlider source = (JSlider) e.getSource();
                   if(!source.getValueIsAdjusting()){
                       resetSettings();
                   }
 
-}
+    }
 
 }
