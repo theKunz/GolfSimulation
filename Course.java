@@ -4,8 +4,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 
 /**
-*
-* @author Aaron
+* Paints the course and the ball
 */
 public class Course extends Canvas
 {
@@ -14,7 +13,6 @@ public class Course extends Canvas
     private double time;
     private int length;
     private int height;
-
     
     public Course()
     {
@@ -46,9 +44,9 @@ public class Course extends Canvas
         putt.setColor(Color.WHITE);
         
         ball.move();
-        
-        putt.fillOval((int)ball.getCurrentX(), (int)ball.getCurrentY(), 25, 25); // ball
-        
+        if(!ball.checkCollisionHole()) {
+            putt.fillOval((int)ball.getCurrentX(), (int)ball.getCurrentY(), 25, 25); // ball
+        }
     
     }
     /*
