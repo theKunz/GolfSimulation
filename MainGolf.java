@@ -16,7 +16,10 @@ import java.util.Hashtable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
+/**
+ * The main class for the Golf simulation. It handles the sliders, panels,
+ * buttons, and the course. 
+ */
 public class MainGolf implements ActionListener, ChangeListener
 {
     Course course = null;
@@ -43,19 +46,14 @@ public class MainGolf implements ActionListener, ChangeListener
 
     public MainGolf()
     {
-
+        // Intentionally left blank
     }
 
     public static void main(String[] args)
     {
-
         MainGolf golfSimulation = new MainGolf();
         golfSimulation.initialize();
         testTime = 1;
-
-
-
-
     }
 
     public void initialize() {
@@ -71,9 +69,6 @@ public class MainGolf implements ActionListener, ChangeListener
 
         int fwidth = frame.getWidth();
         int fheight = frame.getHeight();
-        //Potentially organize it with more JPanels
-        //menu = new JPanel();
-        //view = new JPanel();
         course = new Course();
         makeSliders();
         course.getBall().setTime(0.01);
@@ -82,17 +77,7 @@ public class MainGolf implements ActionListener, ChangeListener
         course.getBall().setFriction(fin);
         course.getBall().setFriction(friction.getValue());
         course.getBall().setInitialVelocity(velocity.getValue() * 6);
-        //menu.add(velocity);
-        //menu.add(startPos);
-        //menu.add(friction);
-        //menu.add(mass);
 
-        //view.add(c);
-
-        //f.add(view, BorderLayout.SOUTH);
-        //frame.add(menu);
-       // frame.add(course);
-       // frame.setVisible(true);
         frame.setResizable(false);
 
         //Setting up the buttons for the JFrame
@@ -130,19 +115,19 @@ public class MainGolf implements ActionListener, ChangeListener
         JPanel topPanel = new JPanel();
         topPanel.setPreferredSize(new Dimension(fwidth,(fheight / 2)));
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-    topPanel.setBackground(Color.WHITE);
+        topPanel.setBackground(Color.WHITE);
         JPanel topLeftPanel = new JPanel();
         topLeftPanel.setPreferredSize(new Dimension((fwidth / 2),(fheight / 2)));
-    topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.Y_AXIS));
+        topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.Y_AXIS));
         JPanel topRightPanel = new JPanel();
         topRightPanel.setPreferredSize(new Dimension((fwidth / 2),(fheight / 2)));
-    topRightPanel.setLayout(new BoxLayout(topRightPanel, BoxLayout.Y_AXIS));
+        topRightPanel.setLayout(new BoxLayout(topRightPanel, BoxLayout.Y_AXIS));
     
 
         //Creates the Panels to organize the top of the jframe
         JPanel bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(fwidth,(fheight / 2)));
-    bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
         JPanel bottomLeftPanel = new JPanel();
         bottomLeftPanel.setLayout(new BoxLayout(bottomLeftPanel, BoxLayout.Y_AXIS));
         //We may need to play with these values to make it look good
@@ -168,35 +153,27 @@ public class MainGolf implements ActionListener, ChangeListener
         topPanel.add(topLeftPanel);
         topPanel.add(topRightPanel);
 
-        //bottomLeftPanel.add(Box.createRigidArea(new Dimension(50, 100)));
         bottomLeftPanel.add(startPos);
         bottomLeftPanel.add(Box.createRigidArea(new Dimension(50, 105)));
 
         bottomRightPanel.add(course);
 
-       bottomPanel.add(Box.createRigidArea(new Dimension(80, 140)));
+        bottomPanel.add(Box.createRigidArea(new Dimension(80, 140)));
         bottomPanel.add(bottomLeftPanel);
-     // bottomPanel.add(Box.createRigidArea(new Dimension(100, 100)));
         bottomPanel.add(bottomRightPanel);
 
-        //frame.add(topPanel);
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(bottomPanel, BorderLayout.SOUTH);
-        //frame.add(bottomPanel);
 
         //This call makes all of the layouts fit the preferred size
         frame.pack();
         frame.setVisible(true);
 
-
-
-
-
     }
 
-    /**
-* Makes the sliders for the frame
-*/
+     /**
+     * Makes the sliders for the frame
+     */
      public void makeSliders() {
          final int MAX_FRIC = 6;
          final int MIN_FRIC = 3;
@@ -210,16 +187,15 @@ public class MainGolf implements ActionListener, ChangeListener
          final int MIN_MASS = 20;
          final int INIT_MASS = 30;
 
-         final int MAX_VEL = 50;
+         final int MAX_VEL = 120;
          final int MIN_VEL = 20;
-         final int INIT_VEL = 30;
+         final int INIT_VEL = 60;
 
          final int MAX_ANG = 45;
          final int MIN_ANG = -45;
          final int INIT_ANG = 0;
 
          Dimension sliderDimension = new Dimension (400, 70);
-
 
          friction = createSlider(MIN_FRIC, MAX_FRIC, INIT_FRIC, sliderDimension, "Grass",
                             "Dry sand", "Friction of wet sand");
@@ -251,8 +227,8 @@ public class MainGolf implements ActionListener, ChangeListener
      }
 
      /**
-* This method will create a new JSlider
-*/
+     * This method will create a new JSlider
+     */
       public JSlider createSlider (int min, int max, int init, Dimension y, String mini, String maxi, String initi){
              JSlider temporarySlider = new JSlider(JSlider.HORIZONTAL, min, max, init);
              temporarySlider.setPreferredSize(y);
@@ -269,14 +245,11 @@ public class MainGolf implements ActionListener, ChangeListener
              temporarySlider.addChangeListener(this);
 
              return temporarySlider;
-
-
-
          }
 
          /**
-* This method will gather the data from the sliders and assign them to the simulation
-*/
+         * This method will gather the data from the sliders and assign them to the simulation
+         */
           public void resetSettings(){
               Ball ball = course.getBall();
               double fin = (double)friction.getValue();
@@ -294,9 +267,9 @@ public class MainGolf implements ActionListener, ChangeListener
 
 
 
-         /**
-* This method will react when the buttons are pushed
-*/
+          /**
+          * This method will react when the buttons are pushed
+          */
           public void actionPerformed(ActionEvent e) {
               String command = e.getActionCommand();
 
@@ -351,15 +324,16 @@ public class MainGolf implements ActionListener, ChangeListener
               }
 
           }
-
-    @Override
+    /**
+    * Updates everything when a slider is changed.
+    * @Override
+    */    
     public void stateChanged(ChangeEvent e)
     {
                   JSlider source = (JSlider) e.getSource();
                   if(!source.getValueIsAdjusting()){
                       resetSettings();
                   }
-
     }
 
 }
